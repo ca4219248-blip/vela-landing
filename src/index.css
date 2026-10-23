@@ -1,0 +1,153 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Offset anchor targets so the sticky navbar never covers headings */
+    scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-ink-950 font-sans text-slate-300 antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display text-white;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: rgba(110, 91, 255, 0.35);
+    color: #fff;
+  }
+
+  /* Keyboard-only focus ring */
+  :focus-visible {
+    outline: 2px solid #8b79ff;
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  /* Slim, themed scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #04050a;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1b1f35;
+    border-radius: 999px;
+    border: 2px solid #04050a;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #262b45;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10;
+  }
+
+  /* Frosted glass surface used across cards and the navbar */
+  .glass {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  /* Gradient text that works on any background */
+  .text-gradient {
+    background-image: linear-gradient(100deg, #a99cff 0%, #8b79ff 35%, #3ee0f5 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Animated gradient used on primary buttons and the CTA band */
+  .bg-brand-gradient {
+    background-image: linear-gradient(100deg, #6e5bff 0%, #8b79ff 45%, #22c9e0 100%);
+  }
+
+  /* Hairline gradient border via a padded wrapper */
+  .gradient-border {
+    position: relative;
+    background-clip: padding-box;
+    border: 1px solid transparent;
+  }
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(140deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.02) 40%, rgba(110, 91, 255, 0.35));
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .card-hover {
+    @apply transition-[transform,border-color,box-shadow] duration-300 ease-out;
+  }
+  .card-hover:hover {
+    transform: translateY(-4px);
+    border-color: rgba(139, 121, 255, 0.35);
+    box-shadow: 0 24px 60px -30px rgba(110, 91, 255, 0.6);
+  }
+}
+
+@layer utilities {
+  /* Faint dotted/line grid backdrop */
+  .bg-grid {
+    background-size: 56px 56px;
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  }
+
+  .mask-fade-b {
+    -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+  }
+
+  .mask-fade-x {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+  }
+}
+
+/* Respect users who prefer reduced motion: disable decorative animation */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
